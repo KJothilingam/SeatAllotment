@@ -147,16 +147,6 @@ export class EmployeeComponent implements OnInit {
     );
   }
   
-  // addEmployee() {
-  //   this.employeeService.addEmployee(this.newEmployee).subscribe(
-  //     () => {
-  //       this.fetchEmployees();
-  //       this.showModal = false;
-  //       alert("Employee added successfully!");
-  //     },
-  //     (error) => alert('Failed to add employee: ' + error.message)
-  //   );
-  // }
   addEmployee() {
     console.log("Sending Employee Data:", this.newEmployee); // ✅ Debugging
     this.employeeService.addEmployee(this.newEmployee).subscribe(
@@ -191,13 +181,30 @@ export class EmployeeComponent implements OnInit {
   }
 
   removeEmployee(id: number) {
+    const employeeToDelete = this.employees.find(emp => emp.employeeid === id);
+    if (!employeeToDelete) {
+      alert("Employee not found!");
+      return;
+    }
+  
+    const confirmation = confirm(`Are you sure you want to delete '${employeeToDelete.name}' (ID: ${id})?`);
+    if (!confirmation) {
+      return;
+    }
+  
     this.employeeService.deleteEmployee(id).subscribe(
-      () => {
+      (response: any) => {
         this.fetchEmployees();
+        alert(`Employee '${employeeToDelete.name}' (ID: ${id}) deleted successfully.`);
       },
-      (error) => console.error('Error removing employee', error)
+      (error) => {
+        console.error('Error removing employee', error);
+        alert('Failed to delete employee: ' + error.message);
+      }
     );
   }
+  
+  
 
   totalPages() {
     return Math.max(1, Math.ceil(this.employees.length / this.itemsPerPage));

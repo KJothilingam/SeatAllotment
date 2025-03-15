@@ -65,11 +65,18 @@ export class EmployeeService {
   /**
    * Delete an employee by ID
    */
-  deleteEmployee(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/delete/${id}`).pipe(
+  // deleteEmployee(id: number): Observable<void> {
+  //   return this.http.delete<void>(`${this.apiUrl}/delete/${id}`).pipe(
+  //     catchError(this.handleError)
+  //   );
+  // }
+  deleteEmployee(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/delete/${id}`).pipe(
+      map(response => response), // Map response directly
       catchError(this.handleError)
     );
   }
+  
 
   /**
    * Handle HTTP errors
