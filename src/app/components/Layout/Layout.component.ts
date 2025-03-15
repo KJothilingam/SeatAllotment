@@ -39,7 +39,7 @@ export class LayoutComponent implements OnInit {
           };
           return acc;
         }, {} as Record<string, Employee>);
-        console.log('Processed Employees:', this.employees);
+        // console.log('Processed Employees:', this.employees);
       },
       (error) => console.error('Error fetching employee data:', error)
     );
@@ -59,7 +59,7 @@ export class LayoutComponent implements OnInit {
           };
           return acc;
         }, {} as Record<string, Seat>);
-        console.log('Processed Seats:', this.seats);  // ✅ Debugging
+        // console.log('Processed Seats:', this.seats);  // ✅ Debugging
       },
       (error) => console.error('Error fetching seat data:', error)
     );
@@ -74,44 +74,40 @@ export class LayoutComponent implements OnInit {
       default: return SeatStatus.Vacant;
     }
   }
-  onSeatClick(seatId: string) {
-    console.log('Clicked Seat ID:', seatId);
-  
-    if (!seatId || !this.seats[seatId]) {
-      console.error(`Invalid Seat ID: ${seatId}. Seat not found in seat records.`);
-      return;
+      onSeatClick(seatId: string) {
+        console.log('Clicked Seat ID:', seatId);
+
+        this.seatService.getEmployeeBySeat(seatId).subscribe(
+          (response: any) => {  
+            console.log('API Response:', response);
+
+            if (response && response.employeeName) {  
+              this.selectedEmployee = {
+                employeeid: response.employeeId || null,  // ✅ Use employeeId if available
+                name: response.employeeName,             // ✅ Correctly map to "name"
+                role: response.role,
+                department: response.department,
+                seat_id: response.seatId                 // ✅ Correctly map to "seat_id"
+              };
+              this.showPopup = true;
+            } else {
+              this.selectedEmployee = null;
+              this.showPopup = false;
+              console.warn(`No employee assigned to seat ${seatId}`);
+            }
+          },
+          (error) => {
+            console.error('Error fetching employee details:', error);
+            this.selectedEmployee = null;
+            this.showPopup = false;
+          }
+        );
     }
+
+      
   
-    this.seatService.getEmployeeBySeat(seatId).subscribe(
-      (emp) => {
-        console.log(`Response for Seat ID ${seatId}:`, emp);
   
-        if (!emp || Object.keys(emp).length === 0) {
-          console.log(`No employee assigned to Seat ID ${seatId}`);
-          this.selectedEmployee = null;
-          this.showPopup = false;
-          return;
-        }
   
-        // 🔥 Correctly mapping the response fields
-        this.selectedEmployee = {
-          employeeid: emp.employeeid ?? -1, // Default to -1 if missing
-          seat_id: emp.seat_id ? Number(emp.seat_id) : -1, // Ensure seatId is a number
-          name: emp.name || 'Unknown',
-          role: emp.role || 'Not Assigned',
-          department: emp.department || 'Not Available'
-        };
-  
-        this.showPopup = true;
-        console.log('Updated Employee Details:', this.selectedEmployee);
-      },
-      (error) => {
-        console.error('Error fetching employee:', error);
-        this.selectedEmployee = null;
-        this.showPopup = false;
-      }
-    );
-  }
   
   
   

@@ -9,6 +9,7 @@
   })
   export class SeatService {
     private apiUrl = 'http://localhost:8080/seats';
+  private employeeUrl = 'http://localhost:8080/employees'; 
 
     constructor(private http: HttpClient) {}
 
@@ -25,6 +26,10 @@
       return this.http.get<Employee>(`${this.apiUrl}/${encodeURIComponent(seatId)}/employee-details`);
     }
     
+     // ✅ Fetch employee details using employee ID (Long)
+  getEmployeeById(employeeId: number): Observable<Employee> {
+    return this.http.get<Employee>(`${this.employeeUrl}/${employeeId}`);
+  }
     
     
   }
