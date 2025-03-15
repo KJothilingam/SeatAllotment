@@ -26,7 +26,7 @@ export class EmployeeComponent implements OnInit {
     name: '',
     department: '',
     role: '',
-    seat_id: 'Unassigned' // Ensuring a valid default
+    seat_id: 'Unassigned' 
   };
 
   newEmployee: Employee = {
@@ -171,14 +171,22 @@ export class EmployeeComponent implements OnInit {
   updateSeat() {
     if (!this.selectedEmployee) return;
   
-    this.employeeService.updateEmployee(this.selectedEmployee.employeeid, this.selectedEmployee).subscribe(
-      () => {
-        this.fetchEmployees();
-        this.showEditModal = false;
-      },
-      (error) => console.error('Error updating employee', error)
-    );
+    console.log("Updating Employee:", this.selectedEmployee); // Debugging
+  
+    this.employeeService.updateEmployee(this.selectedEmployee.employeeid, this.selectedEmployee)
+      .subscribe(
+        (response) => {
+          console.log("Update Success:", response);
+          this.fetchEmployees();
+          this.showEditModal = false;
+        },
+        (error) => {
+          console.error("Error updating employee", error);
+          alert("Failed to update employee: " + error.message);
+        }
+      );
   }
+  
 
   removeEmployee(id: number) {
     const employeeToDelete = this.employees.find(emp => emp.employeeid === id);

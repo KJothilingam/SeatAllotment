@@ -17,7 +17,7 @@ export class EmployeeService {
       map((employees: Employee[]) =>
         employees.map(emp => ({
           ...emp,
-          seatid: emp.seat_id  // Ensure mapping is correct
+          seatid: emp.seat_id  
         }))
       ),
       catchError(this.handleError)
@@ -25,18 +25,12 @@ export class EmployeeService {
   }
   
 
-  /**
-   * Fetch an employee by ID
-   */
   getEmployeeById(id: number): Observable<Employee> {
     return this.http.get<Employee>(`${this.apiUrl}/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
-  /**
-   * Fetch employee by seat ID
-   */
   getEmployeeBySeat(seatId: string): Observable<Employee | null> {
     return this.http.get<Employee[]>(`${this.apiUrl}/list`).pipe(
       map((employees: Employee[]) => employees.find(emp => emp.seat_id === seatId) || null),
@@ -44,32 +38,17 @@ export class EmployeeService {
     );
   }
 
-  /**
-   * Add a new employee
-   */
   addEmployee(employee: Employee): Observable<Employee> {
     return this.http.post<Employee>(`${this.apiUrl}/create`, employee).pipe(
       catchError(this.handleError)
     );
   }
 
-  /**
-   * Update an existing employee
-   */
+  
   updateEmployee(id: number, employee: Employee): Observable<Employee> {
-    return this.http.put<Employee>(`${this.apiUrl}/update/${id}`, employee).pipe(
-      catchError(this.handleError)
-    );
+    return this.http.put<Employee>(`${this.apiUrl}/update/${id}`, employee);
   }
-
-  /**
-   * Delete an employee by ID
-   */
-  // deleteEmployee(id: number): Observable<void> {
-  //   return this.http.delete<void>(`${this.apiUrl}/delete/${id}`).pipe(
-  //     catchError(this.handleError)
-  //   );
-  // }
+  
   deleteEmployee(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/delete/${id}`).pipe(
       map(response => response), // Map response directly
@@ -78,11 +57,9 @@ export class EmployeeService {
   }
   
 
-  /**
-   * Handle HTTP errors
-   */
   private handleError(error: HttpErrorResponse) {
     console.error('API Error:', error);
     return throwError(() => new Error('Something went wrong, please try again later.'));
   }
+
 }
