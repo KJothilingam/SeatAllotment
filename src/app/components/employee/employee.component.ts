@@ -52,17 +52,6 @@ export class EmployeeComponent implements OnInit {
     this.fetchEmployees();
   }
 
-  // get paginatedEmployees() {
-  //   let filtered = this.employees.filter(emp =>
-  //     emp.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-  //     emp.department.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-  //     emp.role.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-  //     (emp.seat_id !== null && emp.seat_id.toString().toLowerCase().includes(this.searchQuery.toLowerCase()))
-  //   );
-
-  //   let startIndex = (this.currentPage - 1) * this.itemsPerPage;
-  //   return filtered.slice(startIndex, startIndex + this.itemsPerPage);
-  // }
   get paginatedEmployees() {
     console.log("All Employees Data: ", this.employees); // Debugging line
   
@@ -158,16 +147,31 @@ export class EmployeeComponent implements OnInit {
     );
   }
   
+  // addEmployee() {
+  //   this.employeeService.addEmployee(this.newEmployee).subscribe(
+  //     () => {
+  //       this.fetchEmployees();
+  //       this.showModal = false;
+  //       alert("Employee added successfully!");
+  //     },
+  //     (error) => alert('Failed to add employee: ' + error.message)
+  //   );
+  // }
   addEmployee() {
+    console.log("Sending Employee Data:", this.newEmployee); // ✅ Debugging
     this.employeeService.addEmployee(this.newEmployee).subscribe(
       () => {
         this.fetchEmployees();
         this.showModal = false;
         alert("Employee added successfully!");
       },
-      (error) => alert('Failed to add employee: ' + error.message)
+      (error) => {
+        console.error('Failed to add employee:', error); // ✅ Log error response
+        alert('Failed to add employee: ' + error.message);
+      }
     );
   }
+  
 
   editEmployee(employee: Employee) {
     this.selectedEmployee = { ...employee };
