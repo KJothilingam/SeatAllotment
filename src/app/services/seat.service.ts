@@ -23,10 +23,6 @@ import { Employee } from '../interfaces/employee';
       return this.http.get<Seat[]>(this.apiUrl);
     }
 
-    // Fetch seat by ID (including employee details)
-    //   getEmployeeBySeat(seatId: string): Observable<Employee> {
-    //   return this.http.get<Employee>(`${this.apiUrl}/${encodeURIComponent(seatId)}/employee-details`);
-    // }
     getEmployeeBySeat(seatId: string): Observable<Employee | { seatId: string; status: string; message: string } | null> {
       return this.http.get<Employee | any>(`${this.apiUrl}/${encodeURIComponent(seatId)}/employee-details`).pipe(
         map((response: any) => {
@@ -42,12 +38,9 @@ import { Employee } from '../interfaces/employee';
       );
     }
     
-    
-    
-     // ✅ Fetch employee details using employee ID (Long)
-  getEmployeeById(employeeId: number): Observable<Employee> {
-    return this.http.get<Employee>(`${this.employeeUrl}/${employeeId}`);
-  }
+    getEmployeeById(employeeId: number): Observable<Employee> {
+      return this.http.get<Employee>(`${this.employeeUrl}/${employeeId}`);
+    }
     
     
   }

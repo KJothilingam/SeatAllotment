@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { SeatStatus } from '../../enum/seatstatus';
 
 @Component({
@@ -13,15 +13,32 @@ export class SeatComponent {
   @Input() direction: 'up' | 'down' | 'left' | 'right' = 'up'; 
   @Output() buttonClick = new EventEmitter<string>(); // Emit as string
 
-  get bgColor(): string {
-    switch (this.seatstatus) {
-      case SeatStatus.Occupied: return '#33FF57';  
-      case SeatStatus.Vacant: return  '#FF5733';    
-      case SeatStatus.Reserved: return '#3357FF';  
-      default: return '#CBCBCB';                  
+  bgColor: string = '#CBCBCB';
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['seatstatus']) {
+      this.bgColor = this.getSeatColor(this.seatstatus);
     }
   }
 
+  // get bgColor(): string {
+  //   switch (this.seatstatus) {
+  //     case SeatStatus.Occupied: return '#33FF57';  //green
+  //     case SeatStatus.Vacant: return  '#FF5733';    //red
+  //     case SeatStatus.Reserved: return '#3357FF'; //blue 
+  //     default: return '#CBCBCB';       //grey           
+  //   }
+  // }
+
+
+
+  getSeatColor(status: SeatStatus): string {
+    switch (status) {
+      case SeatStatus.Occupied: return '#33FF57';  // Green (Vacant)
+      case SeatStatus.Vacant: return '#FF5733';    // Red (Occupied)
+      case SeatStatus.Reserved: return '#3357FF';  // Blue (Reserved)
+      default: return '#CBCBCB';                   // Grey (Unknown)
+    }
+  }
   get arrowTransform(): string {
     switch (this.direction) {
       case 'up': return 'translate(5, 4) rotate(0, 10, 10)';
@@ -33,8 +50,8 @@ export class SeatComponent {
   }
 
   onClick() {
+    alert(this.seatId);
     console.log("Seat clicked:", this.seatId);
     this.buttonClick.emit(this.seatId.toString()); // Emit as string
-    alert('Seat clicked: ' + this.seatId);
   }
 }

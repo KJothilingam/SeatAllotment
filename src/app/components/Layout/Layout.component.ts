@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SeatComponent } from "../seat/seat.component";
 import { SeatService } from '../../services/seat.service';
@@ -22,7 +22,7 @@ export class LayoutComponent implements OnInit {
   seats: Record<string, Seat> = {};  // ✅ Store seats as an object for quick access
   employees: Record<string, Employee> = {}; 
 
-  constructor(private seatService: SeatService, private employeeService: EmployeeService) {}
+  constructor(private seatService: SeatService, private employeeService: EmployeeService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.loadSeats();
@@ -44,9 +44,23 @@ export class LayoutComponent implements OnInit {
       (error) => console.error('Error fetching employee data:', error)
     );
   }
-  
-  
-  
+
+  // loadSeats(): void {
+  //   this.seatService.getSeats().subscribe(
+  //     (data) => {
+  //       this.seats = data.reduce((acc, seat) => {
+  //         acc[seat.id] = {
+  //           ...seat,
+  //           id: seat.id.toString(),  // Convert ID to string for consistency
+  //           status: this.mapSeatStatus(seat.status)
+  //         };
+  //         return acc;
+  //       }, {} as Record<string, Seat>);
+  //       // console.log('Processed Seats:', this.seats);  // ✅ Debugging
+  //     },
+  //     (error) => console.error('Error fetching seat data:', error)
+  //   );
+  // }
 
   loadSeats(): void {
     this.seatService.getSeats().subscribe(
@@ -59,13 +73,14 @@ export class LayoutComponent implements OnInit {
           };
           return acc;
         }, {} as Record<string, Seat>);
-        // console.log('Processed Seats:', this.seats);  // ✅ Debugging
+
+        this.cdr.detectChanges(); // ✅ Ensure UI updates dynamically
       },
       (error) => console.error('Error fetching seat data:', error)
     );
   }
-  
 
+  
   mapSeatStatus(status: string): SeatStatus {
     switch (status.toUpperCase()) {
       case 'OCCUPIED': return SeatStatus.Occupied;
@@ -74,6 +89,7 @@ export class LayoutComponent implements OnInit {
       default: return SeatStatus.Vacant;
     }
   }
+  
   onSeatClick(seatId: string) {
     this.seatService.getEmployeeBySeat(seatId).subscribe(
       (response: any) => {  
