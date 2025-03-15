@@ -53,7 +53,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   get paginatedEmployees() {
-    console.log("All Employees Data: ", this.employees); // Debugging line
+    // console.log("All Employees Data: ", this.employees); // Debugging line
   
     let filtered = this.employees.filter(emp => {
       return (
@@ -65,7 +65,7 @@ export class EmployeeComponent implements OnInit {
       );
     });
   
-    console.log("Filtered Employees: ", filtered); // Debugging line
+    // console.log("Filtered Employees: ", filtered); 
   
     if (this.searchQuery.trim().length > 0) {
       this.currentPage = 1;
@@ -74,7 +74,7 @@ export class EmployeeComponent implements OnInit {
     let startIndex = (this.currentPage - 1) * this.itemsPerPage;
     let result = filtered.slice(startIndex, startIndex + this.itemsPerPage);
   
-    console.log("Paginated Data After Filtering: ", result); // Debugging line
+    // console.log("Paginated Data After Filtering: ", result); // Debugging line
   
     return result;
   }
@@ -129,7 +129,7 @@ export class EmployeeComponent implements OnInit {
   fetchEmployees() {
     this.employeeService.getEmployees().subscribe(
       (data: any[]) => {
-        console.log('API Response:', data);
+        // console.log('API Response:', data);
   
         this.employees = data.map(emp => ({
           employeeid: emp.id, // Ensure employee ID is correctly mapped
@@ -139,7 +139,7 @@ export class EmployeeComponent implements OnInit {
           seat_id: emp.seatId !== undefined && emp.seatId !== null ? emp.seatId.toString() : 'Unassigned'
         }));
   
-        console.log('Processed Employees:', this.employees);
+        // console.log('Processed Employees:', this.employees);
       },
       (error) => {
         console.error('Error fetching employees', error);
@@ -148,7 +148,7 @@ export class EmployeeComponent implements OnInit {
   }
   
   addEmployee() {
-    console.log("Sending Employee Data:", this.newEmployee); // ✅ Debugging
+    // console.log("Sending Employee Data:", this.newEmployee); // ✅ Debugging
     this.employeeService.addEmployee(this.newEmployee).subscribe(
       () => {
         this.fetchEmployees();
@@ -176,6 +176,7 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.updateEmployee(this.selectedEmployee.employeeid, this.selectedEmployee)
       .subscribe(
         (response) => {
+          alert("Update Success");
           console.log("Update Success:", response);
           this.fetchEmployees();
           this.showEditModal = false;
