@@ -1,0 +1,249 @@
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+  }
+  .sidebar {
+    width: 250px;
+    background: #2c3e50;
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+  }
+  .sidebar-btn, .logout-btn {
+    background: none;
+    border: none;
+    color: white;
+    padding: 15px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 17px;
+  }
+  .sidebar-btn:hover, .logout-btn:hover {
+    background: #34495e;
+  }
+  .sidebar-btn.active {
+    background: #1abc9c;
+  }
+  .content {
+    flex-grow: 1;
+    padding: 20px;
+    background: white;
+  }
+  
+  .employee-container {
+    width: 100%;
+    margin: auto;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .search-bar input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .add-btn, .search-btn, .menu-btn, .report-btn {
+    background-color: #1abc9c;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .employee-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .employee-table th, .employee-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  
+  .employee-table th {
+    background-color: #1abc9c;
+    text-align: center;
+  }
+  
+  .delete-btn {
+    background-color: white;
+    color: red;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  /* .modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 50%;
+     height: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+  } */
+  
+  
+  /* Modal Background */
+  .modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    background: white;
+    padding: 25px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  /* Form Group Styling */
+  .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  /* Checkbox Styling */
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* Buttons */
+  .modal-buttons {
+    margin-top: 20px;
+  }
+  
+  .submit-btn, .close-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 5px;
+    width: 45%;
+  }
+  
+  .submit-btn {
+    background-color: #1abc9c;
+    color: white;
+  }
+  
+  .close-btn {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  /* Hover Effects */
+  .submit-btn:hover {
+    background-color: #1abc9c;
+  }
+  
+  .close-btn:hover {
+    background-color: #d32f2f;
+  }
+  
+  /* Fade-In Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  .submit-btn {
+    background: #1abc9c;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .close-btn {
+    background: gray;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .confirmation-popup {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1abc9c;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+  
+  .pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    gap: 10px;
+  }
+  
+  .pagination-controls button {
+    padding: 5px 10px;
+    background-color: #1abc9c;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .pagination-controls button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .edit-btn{
+    background-color: white;
+    color: blue;
+    border:none;
+  }
+  

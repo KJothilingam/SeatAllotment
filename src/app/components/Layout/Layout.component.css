@@ -1,0 +1,66 @@
+.employee-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background: rgb(244, 255, 179);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  transition: 0.3s ease-in-out;
+  text-align: center;
+  z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.employee-popup h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.employee-popup p {
+  margin: 8px 0;
+  font-size: 16px;
+  color: #555;
+}
+
+button {
+  background: #ff4d4d;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+button:hover {
+  background: #e03c3c;
+}
+
+/* Optional: Overlay effect for better visibility */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 999; /* Below popup */
+}
+
+/* New */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevents scrolling */
+  width: 100vw;
+  height: 100vh;
+}
+
+svg {
+  width: 100%;
+  height: 87%;
+  display: block;
+  object-fit: contain; 
+}

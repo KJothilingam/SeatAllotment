@@ -1,0 +1,159 @@
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <img src="assets/Finzly2.png" alt="logo" height="50px"><br>
+        <button [routerLink]="'/'" [class.active]="selectedMenu === 'home'" class="sidebar-btn">
+            Home
+        </button>
+        <button (click)="setMenu('configuration')" [class.active]="selectedMenu === 'configuration'" class="sidebar-btn">
+            Configuration
+        </button>
+        <button (click)="setMenu('manageEmployee')" [class.active]="selectedMenu === 'manageEmployee'" class="sidebar-btn">
+            Manage Employee
+        </button>
+        <button (click)="setMenu('reports')" [class.active]="selectedMenu === 'reports'" class="sidebar-btn">
+            Reports
+        </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <p style="text-align: right; font-size: 18px;">
+            <i><strong>Welcome {{ adminName }}!</strong></i>
+        </p>
+
+        <!-- Configuration Section -->
+        <div *ngIf="selectedMenu === 'configuration'">
+            <h3>Seating Configuration</h3>
+            <p>Configure the seating layout and assign desks to employees.</p>
+        </div>
+
+        <!-- Manage Employees Section -->
+        <div *ngIf="selectedMenu === 'manageEmployee'" class="employee-container">
+            <!-- Search Bar & Add Employee -->
+            <div class="search-bar">
+                <input type="text" [(ngModel)]="searchQuery" placeholder="Search">
+                <button class="add-btn" (click)="showModal = true">+ Add Employee</button>
+            </div>
+            <hr>
+
+            <!-- Employee Table -->
+            <table class="employee-table">
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Role</th>
+                        <th>Seat No</th>
+                        <th>Edit</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let employee of paginatedEmployees | filter:searchQuery">
+                        <td style="text-align: center;">{{ employee.employeeid }}</td>
+                        <td>{{ employee.name }}</td>
+                        <td>{{ employee.department }}</td>
+                        <td>{{ employee.role }}</td>
+                        <td style="text-align: center;">{{ employee.seat_id }}</td>
+                        <td style="text-align: center;">
+                            <button (click)="editEmployee(employee)" class="edit-btn">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                        </td>
+                        <td style="text-align: center;">
+                            <button (click)="removeEmployee(employee.employeeid)" class="delete-btn">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr><br>
+
+            <!-- Pagination Controls -->
+            <div class="pagination-controls">
+                <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+                <span>Page {{ currentPage }} of {{ totalPages() }}</span>
+                <button (click)="nextPage()" [disabled]="currentPage >= totalPages()">Next</button>
+            </div>
+        </div>
+
+        <!-- Modal for Adding Employee -->
+        <div class="modal" *ngIf="showModal">
+            <div class="modal-content">
+                <h2>Add New Employee</h2>
+
+                <div class="form-group">
+                    <label>Name</label>
+                    <input [(ngModel)]="newEmployee.name" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>Department</label>
+                    <input [(ngModel)]="newEmployee.department" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>Role</label>
+                    <input [(ngModel)]="newEmployee.role" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label>Seat No</label>
+                    <input [(ngModel)]="newEmployee.seat_id" class="form-control">
+                </div>
+
+                <div class="modal-buttons">
+                    <button class="submit-btn" (click)="addEmployee()">Submit</button>
+                    <button class="close-btn" (click)="showModal = false">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Editing Employee -->
+        <div class="modal" *ngIf="showEditModal">
+            <div class="modal-content">
+                <h2>Edit Employee</h2>
+
+                <div class="form-group">
+                    <label>Name</label>
+                    <input [(ngModel)]="selectedEmployee.name" class="form-control" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Department</label>
+                    <input [(ngModel)]="selectedEmployee.department" class="form-control" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Role</label>
+                    <input [(ngModel)]="selectedEmployee.role" class="form-control" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Seat No</label>
+                    <input [(ngModel)]="selectedEmployee.seat_id" class="form-control">
+                </div>
+
+                <div class="modal-buttons">
+                    <button class="submit-btn" (click)="updateSeat()">Update</button>
+                    <button class="close-btn" (click)="showEditModal = false">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Popup -->
+        <div class="confirmation-popup" *ngIf="showConfirmation">
+            Employee Added Successfully!
+        </div>
+
+        <!-- Reports Section -->
+        <div *ngIf="selectedMenu === 'reports'">
+            <h3>Seating Reports</h3>
+            <p>Generate reports on seating allocations and availability.</p>
+            <button class="btn report-btn" (click)="generateReport()">Generate Report</button>
+        </div>
+    </div>
+</div>
