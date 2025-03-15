@@ -273,7 +273,7 @@
               <foreignObject x="242" y="1" width="45" height="45">
                 <app-seat 
                 *ngIf="seats['C3']"
-                [seatId]="'25.4C3'" 
+                [seatId]="'C3'" 
                 [size]="43" 
                 [seatstatus]="seats['C3'].status"
                 [direction]="'down'" 
@@ -502,32 +502,93 @@
         <g transform="translate(294.162 1)">
           <g transform="translate(0 30.556)">
             <foreignObject x="64" y="-3" width="45" height="45">
-              <app-seat [seatId]="'5'" [seatstatus]="SeatStatus.Vacant" [size]="43" [direction]="'left'" (buttonClick)="onSeatClick($event)"></app-seat>
+              <app-seat 
+              *ngIf="seats['5']"
+              [seatId]="'5'" 
+              [size]="43" 
+              [seatstatus]="seats['5'].status"
+              [direction]="'left'" 
+              (buttonClick)="onSeatClick('5')">
+            </app-seat>
+              <!-- <app-seat [seatId]="'5'" [seatstatus]="SeatStatus.Vacant" [size]="43" [direction]="'left'" (buttonClick)="onSeatClick($event)"></app-seat> -->
             </foreignObject>
             <foreignObject x="64" y="68" width="45" height="45">
-              <app-seat [seatId]="'6'" [seatstatus]="SeatStatus.Vacant" [size]="43" [direction]="'left'" (buttonClick)="onSeatClick($event)"></app-seat>
+              <app-seat 
+              *ngIf="seats['6']"
+              [seatId]="'6'" 
+              [size]="43" 
+              [seatstatus]="seats['6'].status"
+              [direction]="'left'" 
+              (buttonClick)="onSeatClick('6')">
+            </app-seat>
+            
             </foreignObject>
             <foreignObject x="64" y="140" width="45" height="45">
-              <app-seat [seatId]="'7'" [seatstatus]="SeatStatus.Vacant" [size]="43" [direction]="'left'" (buttonClick)="onSeatClick($event)"></app-seat>
+              <app-seat 
+              *ngIf="seats['7']"
+              [seatId]="'7'" 
+              [size]="43" 
+              [seatstatus]="seats['7'].status"
+              [direction]="'left'" 
+              (buttonClick)="onSeatClick('7')">
+            </app-seat>
+             
             </foreignObject>
           
             <foreignObject x="-6" y="-3" width="45" height="45">
-              <app-seat [seatId]="'12'" [seatstatus]="SeatStatus.Vacant" [size]="43" [direction]="'right'" (buttonClick)="onSeatClick($event)"></app-seat>
+              <app-seat 
+              *ngIf="seats['12']"
+              [seatId]="'12'" 
+              [size]="43" 
+              [seatstatus]="seats['12'].status"
+              [direction]="'right'" 
+              (buttonClick)="onSeatClick('12')">
+            </app-seat>
             </foreignObject>
           
             <foreignObject x="-6" y="68" width="45" height="45">
-              <app-seat [seatId]="'11'" [seatstatus]="SeatStatus.Vacant" [size]="43" [direction]="'right'" (buttonClick)="onSeatClick($event)"></app-seat>
+              <app-seat 
+              *ngIf="seats['11']"
+              [seatId]="'11'" 
+              [size]="43" 
+              [seatstatus]="seats['11'].status"
+              [direction]="'right'" 
+              (buttonClick)="onSeatClick('11')">
+            </app-seat>
             </foreignObject>
           
             <foreignObject x="-6" y="140" width="45" height="45">
-              <app-seat [seatId]="'10'" [seatstatus]="SeatStatus.Vacant" [size]="43" [direction]="'right'" (buttonClick)="onSeatClick($event)"></app-seat>
+              <app-seat 
+              *ngIf="seats['10']"
+              [seatId]="'10'" 
+              [size]="43" 
+              [seatstatus]="seats['10'].status"
+              [direction]="'right'" 
+              (buttonClick)="onSeatClick('10')">
+            </app-seat>
             </foreignObject>
           
               <foreignObject x="-6" y="210" width="45" height="45">
-                <app-seat [seatId]="'9'" [seatstatus]="SeatStatus.Vacant" [size]="43" [direction]="'right'" (buttonClick)="onSeatClick($event)"></app-seat>
+                <app-seat 
+              *ngIf="seats['9']"
+              [seatId]="'9'" 
+              [size]="43" 
+              [seatstatus]="seats['9'].status"
+              [direction]="'right'" 
+              (buttonClick)="onSeatClick('9')">
+            </app-seat>
+                
               </foreignObject>
               <foreignObject x="64" y="210" width="45" height="45">
-                <app-seat [seatId]="'8'" [seatstatus]="SeatStatus.Vacant" [size]="43" [direction]="'left'" (buttonClick)="onSeatClick($event)"></app-seat>
+                <app-seat 
+              *ngIf="seats['8']"
+              [seatId]="'8'" 
+              [size]="43" 
+              [seatstatus]="seats['8'].status"
+              [direction]="'left'" 
+              (buttonClick)="onSeatClick('8')">
+            </app-seat>
+                
               </foreignObject>
               
           </g>
@@ -541,19 +602,47 @@
         </g>
         <g transform="translate(443.162 31.556)">
           <foreignObject x="-5" y="210" width="45" height="45">
-            <app-seat [seatId]="'1'" [seatstatus]="SeatStatus.Vacant" [size]="43" [direction]="'right'" (buttonClick)="onSeatClick($event)"></app-seat>
+            <app-seat 
+              *ngIf="seats['1']"
+              [seatId]="'1'" 
+              [size]="43" 
+              [seatstatus]="seats['1'].status"
+              [direction]="'right'" 
+              (buttonClick)="onSeatClick('1')">
+            </app-seat>
           </foreignObject>
          
           <foreignObject x="-5" y="140" width="45" height="45">
-            <app-seat [seatId]="'2'" [seatstatus]="SeatStatus.Vacant" [size]="43" [direction]="'right'" (buttonClick)="onSeatClick($event)"></app-seat>
+            <app-seat 
+              *ngIf="seats['2']"
+              [seatId]="'2'" 
+              [size]="43" 
+              [seatstatus]="seats['2'].status"
+              [direction]="'right'" 
+              (buttonClick)="onSeatClick('2')">
+            </app-seat>
           </foreignObject>
          
           <foreignObject x="-5" y="68" width="45" height="45">
-            <app-seat [seatId]="'3'" [seatstatus]="SeatStatus.Vacant" [size]="43" [direction]="'right'" (buttonClick)="onSeatClick($event)"></app-seat>
+            <app-seat 
+              *ngIf="seats['3']"
+              [seatId]="'3'" 
+              [size]="43" 
+              [seatstatus]="seats['3'].status"
+              [direction]="'right'" 
+              (buttonClick)="onSeatClick('3')">
+            </app-seat>
           </foreignObject>
          
           <foreignObject x="-5" y="-3" width="45" height="45">
-            <app-seat [seatId]="'4'" [seatstatus]="SeatStatus.Vacant" [size]="43" [direction]="'right'" (buttonClick)="onSeatClick($event)"></app-seat>
+            <app-seat 
+              *ngIf="seats['4']"
+              [seatId]="'4'" 
+              [size]="43" 
+              [seatstatus]="seats['4'].status"
+              [direction]="'right'" 
+              (buttonClick)="onSeatClick('4')">
+            </app-seat>
           </foreignObject>
          
         
