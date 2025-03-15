@@ -52,17 +52,46 @@ export class EmployeeComponent implements OnInit {
     this.fetchEmployees();
   }
 
-  get paginatedEmployees() {
-    let filtered = this.employees.filter(emp =>
-      emp.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      emp.department.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      emp.role.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      (emp.seat_id !== null && emp.seat_id.toString().toLowerCase().includes(this.searchQuery.toLowerCase()))
-    );
+  // get paginatedEmployees() {
+  //   let filtered = this.employees.filter(emp =>
+  //     emp.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+  //     emp.department.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+  //     emp.role.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+  //     (emp.seat_id !== null && emp.seat_id.toString().toLowerCase().includes(this.searchQuery.toLowerCase()))
+  //   );
 
+  //   let startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  //   return filtered.slice(startIndex, startIndex + this.itemsPerPage);
+  // }
+  get paginatedEmployees() {
+    console.log("All Employees Data: ", this.employees); // Debugging line
+  
+    // Ensure search is applied on ALL employees, not just the paginated ones
+    let filtered = this.employees.filter(emp => {
+      return (
+        emp.name?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        emp.department?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        emp.role?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        (emp.seat_id && emp.seat_id.toString().toLowerCase().includes(this.searchQuery.toLowerCase()))
+      );
+    });
+  
+    console.log("Filtered Employees: ", filtered); // Debugging line
+  
+    // Reset to first page if search is applied
+    if (this.searchQuery.trim().length > 0) {
+      this.currentPage = 1;
+    }
+  
+    // Apply pagination on the filtered list
     let startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    return filtered.slice(startIndex, startIndex + this.itemsPerPage);
+    let result = filtered.slice(startIndex, startIndex + this.itemsPerPage);
+  
+    console.log("Paginated Data After Filtering: ", result); // Debugging line
+  
+    return result;
   }
+  
 
   setMenu(menu: string) {
     this.selectedMenu = menu;
