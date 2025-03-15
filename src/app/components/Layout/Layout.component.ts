@@ -74,35 +74,47 @@ export class LayoutComponent implements OnInit {
       default: return SeatStatus.Vacant;
     }
   }
-      onSeatClick(seatId: string) {
-        console.log('Clicked Seat ID:', seatId);
+  onSeatClick(seatId: string) {
+    this.seatService.getEmployeeBySeat(seatId).subscribe(
+      (response: any) => {  
+        console.log('API Response:', response);
 
-        this.seatService.getEmployeeBySeat(seatId).subscribe(
-          (response: any) => {  
-            console.log('API Response:', response);
+        if (!response) {  // If response is null or undefined
+          console.warn(`No data received for seat ${seatId}`);
+          this.selectedEmployee = null;
+          this.showPopup = false;
+          return;
+        }
 
-            if (response && response.employeeName) {  
-              this.selectedEmployee = {
-                employeeid: response.employeeId || null,  // ✅ Use employeeId if available
-                name: response.employeeName,             // ✅ Correctly map to "name"
-                role: response.role,
-                department: response.department,
-                seat_id: response.seatId                 // ✅ Correctly map to "seat_id"
-              };
-              this.showPopup = true;
-            } else {
-              this.selectedEmployee = null;
-              this.showPopup = false;
-              console.warn(`No employee assigned to seat ${seatId}`);
-            }
-          },
-          (error) => {
-            console.error('Error fetching employee details:', error);
-            this.selectedEmployee = null;
-            this.showPopup = false;
-          }
-        );
-    }
+        if (response.status === 'VACANT') {  // Handle vacant seats properly
+          console.log(` ${response.message}`);
+          this.selectedEmployee = null;
+          this.showPopup = false;
+          return;
+        }
+
+        if (response.employeeName) {  
+          this.selectedEmployee = {
+            employeeid: response.employeeId || null,  // Ensure safe access
+            name: response.employeeName,             
+            role: response.role || 'Unknown',        // Default if missing
+            department: response.department || 'Unknown',
+            seat_id: response.seatId || seatId       // Fallback to seatId
+          };
+          this.showPopup = true;
+        } else {
+          console.warn(`No employee assigned to seat ${seatId}`);
+          this.selectedEmployee = null;
+          this.showPopup = false;
+        }
+      },
+      (error) => {
+        console.error(`Error fetching employee details for seat ${seatId}:`, error);
+        this.selectedEmployee = null;
+        this.showPopup = false;
+      }
+    );
+}
 
       
   
