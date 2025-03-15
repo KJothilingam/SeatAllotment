@@ -48,21 +48,6 @@ export class LayoutComponent implements OnInit {
   
   
 
-  // loadSeats(): void {
-  //   this.seatService.getSeats().subscribe(
-  //     (data) => {
-  //       this.seats = data.reduce((acc, seat) => {
-  //         acc[seat.id] = {
-  //           ...seat,
-  //           id: seat.id.toString(),
-  //           status: this.mapSeatStatus(seat.status) // ✅ Fetching status dynamically
-  //         };
-  //         return acc;
-  //       }, {} as Record<string, Seat>);
-  //     },
-  //     (error) => console.error('Error fetching seat data:', error)
-  //   );
-  // }
   loadSeats(): void {
     this.seatService.getSeats().subscribe(
       (data) => {
@@ -89,21 +74,6 @@ export class LayoutComponent implements OnInit {
       default: return SeatStatus.Vacant;
     }
   }
-
-  // onSeatClick(seatId: string) {
-  //   this.seatService.getEmployeeBySeat(seatId).subscribe(
-  //     (emp) => {
-  //       this.selectedEmployee = emp;
-  //       this.showPopup = true;
-  //       console.log('Employee Details:', this.selectedEmployee);
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching employee:', error);
-  //       this.selectedEmployee = null;
-  //       this.showPopup = false;
-  //     }
-  //   );
-  // }
   onSeatClick(seatId: string) {
     console.log('Clicked Seat ID:', seatId);
   
