@@ -45,9 +45,20 @@ export class EmployeeService {
   }
 
   
-  updateEmployee(id: number, employee: Employee): Observable<Employee> {
-    return this.http.put<Employee>(`${this.apiUrl}/update/${id}`, employee);
-  }
+  // updateEmployee(id: number, employee: Employee): Observable<Employee> {
+  //   return this.http.put<Employee>(`${this.apiUrl}/update/${id}`, employee);
+  // }
+  updateEmployee(id: number, employee: Employee): Observable<any> { 
+    return this.http.put<any>(`${this.apiUrl}/update/${id}`, employee).pipe(
+      map((response) => response.employee), // Extract the actual employee object
+      catchError((error: HttpErrorResponse) => {
+        console.error("API Error:", error);
+        return throwError(() => new Error(error.error?.message || "Update failed")); 
+      })
+    );
+}
+
+  
   
   deleteEmployee(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/delete/${id}`).pipe(

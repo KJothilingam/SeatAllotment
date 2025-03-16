@@ -74,6 +74,13 @@
     background-color: #1abc9c;
     text-align: center;
   }
+  /* Add spacing between select and input fields */
+.seat-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Adds space between dropdown and input */
+}
+
   
   .delete-btn {
     background-color: white;
