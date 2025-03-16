@@ -38,16 +38,19 @@ export class EmployeeService {
     );
   }
 
-  addEmployee(employee: Employee): Observable<Employee> {
-    return this.http.post<Employee>(`${this.apiUrl}/create`, employee).pipe(
-      catchError(this.handleError)
-    );
-  }
 
-  
-  // updateEmployee(id: number, employee: Employee): Observable<Employee> {
-  //   return this.http.put<Employee>(`${this.apiUrl}/update/${id}`, employee);
-  // }
+addEmployee(employee: any): Observable<any> {
+  return this.http.post<any>(`${this.apiUrl}/create`, employee).pipe(
+      catchError((error: HttpErrorResponse) => {
+          console.error("❌ API Error:", error);
+          alert("❌ Error: " + (error.error?.message || "Server Error"));
+          return throwError(() => new Error(error.error?.message || "Server Error"));
+      })
+  );
+}
+
+
+
   updateEmployee(id: number, employee: Employee): Observable<any> { 
     return this.http.put<any>(`${this.apiUrl}/update/${id}`, employee).pipe(
       map((response) => response.employee), // Extract the actual employee object
@@ -58,8 +61,6 @@ export class EmployeeService {
     );
 }
 
-  
-  
   deleteEmployee(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/delete/${id}`).pipe(
       map(response => response), // Map response directly

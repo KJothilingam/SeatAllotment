@@ -136,19 +136,46 @@ export class EmployeeComponent implements OnInit {
     );
   }
 
-  addEmployee() {
-    this.employeeService.addEmployee(this.newEmployee).subscribe(
-      () => {
-        this.fetchEmployees();
-        this.showModal = false;
-        alert("Employee added successfully!");
+
+addEmployee() {
+  let seatSelection = this.newEmployee.seat_id 
+      ? String(this.newEmployee.seat_id).trim() 
+      : '';
+
+  if (seatSelection === 'Work From Home') {
+      this.newEmployee.seat_id = 'Work From Home';
+  } else if (seatSelection === 'Manual' && this.manualNewSeatEntry?.trim()) {
+      this.newEmployee.seat_id = this.manualNewSeatEntry;
+  } else {
+      this.newEmployee.seat_id = 'Unassigned'; // Default to Unassigned
+  }
+
+  console.log("🚀 Sending Employee Data:", this.newEmployee);
+
+  this.employeeService.addEmployee(this.newEmployee).subscribe(
+      (response: any) => {
+          console.log("✅ Response from backend:", response);
+          if (response.message.includes('❌')) {
+              alert(response.message); // Show error if seat is occupied
+              return;
+          }
+          
+          this.fetchEmployees();
+          this.showModal = false;
+          alert(response.message || "✅ Employee added successfully!");
+
+          // Reset form
+          this.newEmployee = { employeeid: 0, name: '', department: '', role: '', seat_id: 'Unassigned' };
+          this.manualNewSeatEntry = '';
       },
       (error) => {
-        console.error('Failed to add employee:', error);
-        alert('Failed to add employee: ' + error.message);
+          console.error('❌ Failed to add employee:', error);
+          alert('❌ Error: ' + (error.error?.message || 'Something went wrong!'));
       }
-    );
-  }
+  );
+}
+
+
 
   editEmployee(employee: Employee) {
     this.selectedEmployee = { ...employee };
@@ -162,7 +189,16 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
- 
+  manualNewSeatEntry: string = ''; 
+  handleNewSeatSelection() {
+    if (this.newEmployee.seat_id === 'Manual') {
+        this.manualNewSeatEntry = '';
+    } else {
+        this.manualNewSeatEntry = ''; // Reset manual entry if another option is selected
+    }
+}
+
+
   updateSeat() {
     if (!this.selectedEmployee || !this.selectedEmployee.employeeid) {
         console.error("Error: Employee details are missing!");
@@ -239,4 +275,5 @@ export class EmployeeComponent implements OnInit {
       this.currentPage--;
     }
   }
+
 }
