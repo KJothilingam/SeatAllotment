@@ -1,13 +1,24 @@
 <app-navbar></app-navbar>
 
 <!-- Employee Info Card (Popup) -->
+<!-- Overlay for better visibility -->
+<div *ngIf="showPopup" class="popup-overlay" (click)="closePopup()"></div>
+
+<!-- Employee Info Popup -->
 <div *ngIf="showPopup && selectedEmployee" class="employee-popup">
-  <h3>Employee Details</h3>
-  <p><strong>Name:</strong> {{ selectedEmployee.name }}</p>
-  <p><strong>Role:</strong> {{ selectedEmployee.role }}</p>
-  <p><strong>Department:</strong> {{ selectedEmployee.department }}</p>
-  <button (click)="closePopup()">Close</button>
+  <h2>Employee Details</h2>
+  
+  <div class="popup-content">
+    <p><strong>Name:</strong> {{ selectedEmployee.name }}</p>
+    <p><strong>Role:</strong> {{ selectedEmployee.role }}</p>
+    <p><strong>Department:</strong> {{ selectedEmployee.department }}</p>
+  </div>
+
+  <div class="popup-buttons">
+    <button class="close-btn" (click)="closePopup()">Close</button>
+  </div>
 </div>
+
 
 
 <svg width="1808" height="910.025" viewBox="0 0 1808 910.025" fill="none" xmlns="http://www.w3.org/2000/svg">

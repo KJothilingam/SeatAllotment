@@ -1,52 +1,64 @@
-.employee-popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 300px;
-  background: rgb(244, 255, 179);
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  transition: 0.3s ease-in-out;
-  text-align: center;
-  z-index: 1000; /* Ensure it appears above other elements */
-}
-
-.employee-popup h3 {
-  margin-top: 0;
-  color: #333;
-}
-
-.employee-popup p {
-  margin: 8px 0;
-  font-size: 16px;
-  color: #555;
-}
-
-button {
-  background: #ff4d4d;
-  color: white;
-  padding: 8px 12px;
-  border: none;
-  cursor: pointer;
-  margin-top: 10px;
-  border-radius: 5px;
-}
-
-button:hover {
-  background: #e03c3c;
-}
-
-/* Optional: Overlay effect for better visibility */
+/* Popup Overlay (Dark Background Behind Popup) */
 .popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-  z-index: 999; /* Below popup */
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/* Employee Popup Container */
+.employee-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 380px; /* Matches modal width */
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  z-index: 1000;
+}
+
+/* Title Styling (H2 Matches Modal Style) */
+.employee-popup h2 {
+  font-size: 22px;
+  margin-top: 0;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Popup Content Spacing */
+.popup-content p {
+  font-size: 16px;
+  color: #555;
+  margin: 10px 0;
+  text-align: left;
+}
+
+/* Button Container */
+.popup-buttons {
+  margin-top: 20px;
+}
+
+/* Close Button (Matches "Close" in Modal) */
+.close-btn {
+  background-color: #1abc9c;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.close-btn:hover {
+  background-color: #5a5a5a;
 }
 
 /* New */
