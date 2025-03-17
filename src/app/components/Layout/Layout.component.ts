@@ -45,22 +45,6 @@ export class LayoutComponent implements OnInit {
     );
   }
 
-  // loadSeats(): void {
-  //   this.seatService.getSeats().subscribe(
-  //     (data) => {
-  //       this.seats = data.reduce((acc, seat) => {
-  //         acc[seat.id] = {
-  //           ...seat,
-  //           id: seat.id.toString(),  // Convert ID to string for consistency
-  //           status: this.mapSeatStatus(seat.status)
-  //         };
-  //         return acc;
-  //       }, {} as Record<string, Seat>);
-  //       // console.log('Processed Seats:', this.seats);  // ✅ Debugging
-  //     },
-  //     (error) => console.error('Error fetching seat data:', error)
-  //   );
-  // }
 
   loadSeats(): void {
     this.seatService.getSeats().subscribe(
@@ -103,6 +87,7 @@ export class LayoutComponent implements OnInit {
         }
 
         if (response.status === 'VACANT') {  // Handle vacant seats properly
+          alert(` ${response.message}`);
           console.log(` ${response.message}`);
           this.selectedEmployee = null;
           this.showPopup = false;

@@ -7,7 +7,7 @@ import { SeatStatus } from '../../enum/seatstatus';
   styleUrl: './seat.component.css'
 })
 export class SeatComponent {
-  @Input() seatId!: string | number; // Accepts string or number
+  @Input() seatId!: string | number; 
   @Input() seatstatus: SeatStatus = SeatStatus.Vacant; 
   @Input() size: number = 40;  
   @Input() direction: 'up' | 'down' | 'left' | 'right' = 'up'; 
@@ -19,15 +19,6 @@ export class SeatComponent {
       this.bgColor = this.getSeatColor(this.seatstatus);
     }
   }
-
-  // get bgColor(): string {
-  //   switch (this.seatstatus) {
-  //     case SeatStatus.Occupied: return '#33FF57';  //green
-  //     case SeatStatus.Vacant: return  '#FF5733';    //red
-  //     case SeatStatus.Reserved: return '#3357FF'; //blue 
-  //     default: return '#CBCBCB';       //grey           
-  //   }
-  // }
 
 
 
