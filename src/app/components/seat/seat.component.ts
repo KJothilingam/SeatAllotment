@@ -50,7 +50,7 @@ export class SeatComponent {
   }
 
   onClick() {
-    alert(this.seatId);
+    // alert(this.seatId);
     console.log("Seat clicked:", this.seatId);
     this.buttonClick.emit(this.seatId.toString()); // Emit as string
   }

@@ -5,9 +5,9 @@
         <button [routerLink]="'/'" [class.active]="selectedMenu === 'home'" class="sidebar-btn">
             Home
         </button>
-        <button (click)="setMenu('configuration')" [class.active]="selectedMenu === 'configuration'" class="sidebar-btn">
+        <!-- <button (click)="setMenu('configuration')" [class.active]="selectedMenu === 'configuration'" class="sidebar-btn">
             Configuration
-        </button>
+        </button> -->
         <button (click)="setMenu('manageEmployee')" [class.active]="selectedMenu === 'manageEmployee'" class="sidebar-btn">
             Manage Employee
         </button>
@@ -18,8 +18,8 @@
 
     <!-- Main Content -->
     <div class="content">
-        <p style="text-align: right; font-size: 18px;">
-            <i><strong>Welcome {{ adminName }}!</strong></i>
+        <p style="text-align: right; font-size: 22px;">
+            <strong>Welcome!</strong>
         </p>
 
         <!-- Configuration Section -->

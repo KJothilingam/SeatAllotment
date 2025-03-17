@@ -82,42 +82,94 @@ export class EmployeeComponent implements OnInit {
     this.selectedSubMenu = menu;
   }
 
+  // generateReport(): void {
+  //   if (!this.employees || this.employees.length === 0) {
+  //     alert("No employee data available for generating the report.");
+  //     return;
+  //   }
+
+  //   const doc = new jsPDF();
+  //   const currentDate = new Date().toISOString().slice(0, 10);
+  //   const fileName = `Seating_Report_${currentDate}.pdf`;
+
+  //   doc.setFont("helvetica", "bold");
+  //   doc.setFontSize(18);
+  //   doc.setTextColor(40, 116, 166);
+  //   doc.text("Seating Allocation Report", 50, 20);
+
+  //   doc.setDrawColor(0, 0, 0);
+  //   doc.line(10, 25, 200, 25);
+
+  //   const tableData = this.employees.map(emp => [
+  //     emp.employeeid,
+  //     emp.name,
+  //     emp.department,
+  //     emp.role,
+  //     emp.seat_id !== null ? emp.seat_id : 'Unassigned'
+  //   ]);
+
+  //   autoTable(doc, {
+  //     startY: 30,
+  //     theme: "grid",
+  //     head: [["Employee ID", "Name", "Department", "Role", "Seat No"]],
+  //     body: tableData,
+  //     headStyles: { fillColor: [40, 116, 166] }
+  //   });
+
+  //   doc.save(fileName);
+  // }
+
   generateReport(): void {
     if (!this.employees || this.employees.length === 0) {
-      alert("No employee data available for generating the report.");
-      return;
+        alert("No employee data available for generating the report.");
+        return;
     }
 
     const doc = new jsPDF();
     const currentDate = new Date().toISOString().slice(0, 10);
     const fileName = `Seating_Report_${currentDate}.pdf`;
 
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(18);
-    doc.setTextColor(40, 116, 166);
-    doc.text("Seating Allocation Report", 50, 20);
+    const headerImg = new Image();
+    headerImg.src = "assets/header.png"; // Ensure this path is correct
 
-    doc.setDrawColor(0, 0, 0);
-    doc.line(10, 25, 200, 25);
+    const footerImg = new Image();
+    footerImg.src = "assets/footer.png"; // Ensure this path is correct
 
-    const tableData = this.employees.map(emp => [
-      emp.employeeid,
-      emp.name,
-      emp.department,
-      emp.role,
-      emp.seat_id !== null ? emp.seat_id : 'Unassigned'
-    ]);
+    headerImg.onload = () => {
+        doc.addImage(headerImg, "PNG", 10, 5, 190, 20); // Adjust position & size
 
-    autoTable(doc, {
-      startY: 30,
-      theme: "grid",
-      head: [["Employee ID", "Name", "Department", "Role", "Seat No"]],
-      body: tableData,
-      headStyles: { fillColor: [40, 116, 166] }
-    });
+        // Report Title
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(16);
+        doc.setTextColor(40, 116, 166);
+        doc.text("Seating Allocation Report", 70, 35);
 
-    doc.save(fileName);
-  }
+        doc.setDrawColor(0, 0, 0);
+        doc.line(10, 40, 200, 40);
+
+        // Table Data
+        const tableData = this.employees.map(emp => [
+            emp.employeeid, emp.name, emp.department, emp.role, emp.seat_id
+        ]);
+
+        autoTable(doc, {
+            startY: 45,
+            theme: "grid",
+            head: [["Employee ID", "Name", "Department", "Role", "Seat No"]],
+            body: tableData,
+            headStyles: { fillColor: [40, 116, 166] }
+        });
+
+        footerImg.onload = () => {
+            doc.addImage(footerImg, "PNG", 10, 270, 190, 20); // Adjust position & size
+            doc.save(fileName); // ✅ Ensure the PDF saves after everything loads
+        };
+
+        footerImg.src = "assets/footer.png"; // Trigger loading
+    };
+
+    headerImg.src = "assets/header.png"; // Trigger loading
+}
 
   fetchEmployees() {
     this.employeeService.getEmployees().subscribe(
