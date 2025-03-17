@@ -8,6 +8,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { RouterLink } from '@angular/router';
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 @Component({
   selector: 'app-employee',
@@ -81,43 +83,41 @@ export class EmployeeComponent implements OnInit {
   setSubMenu(menu: string) {
     this.selectedSubMenu = menu;
   }
+  
 
-  // generateReport(): void {
-  //   if (!this.employees || this.employees.length === 0) {
-  //     alert("No employee data available for generating the report.");
-  //     return;
-  //   }
+  generateReportExcel(): void {
+    if (!this.employees || this.employees.length === 0) {
+        alert("No employee data available for generating the report.");
+        return;
+    }
 
-  //   const doc = new jsPDF();
-  //   const currentDate = new Date().toISOString().slice(0, 10);
-  //   const fileName = `Seating_Report_${currentDate}.pdf`;
+    const currentDate = new Date().toISOString().slice(0, 10);
+    const fileName = `Seating_Report_${currentDate}.xlsx`;
 
-  //   doc.setFont("helvetica", "bold");
-  //   doc.setFontSize(18);
-  //   doc.setTextColor(40, 116, 166);
-  //   doc.text("Seating Allocation Report", 50, 20);
+    // Define Excel headers
+    const headers = [["Employee ID", "Name", "Department", "Role", "Seat No"]];
 
-  //   doc.setDrawColor(0, 0, 0);
-  //   doc.line(10, 25, 200, 25);
+    // Convert employee data to Excel format
+    const data = this.employees.map(emp => [
+        emp.employeeid, emp.name, emp.department, emp.role, emp.seat_id
+    ]);
 
-  //   const tableData = this.employees.map(emp => [
-  //     emp.employeeid,
-  //     emp.name,
-  //     emp.department,
-  //     emp.role,
-  //     emp.seat_id !== null ? emp.seat_id : 'Unassigned'
-  //   ]);
+    // Create worksheet and add headers & data
+    const ws = XLSX.utils.aoa_to_sheet([...headers, ...data]);
 
-  //   autoTable(doc, {
-  //     startY: 30,
-  //     theme: "grid",
-  //     head: [["Employee ID", "Name", "Department", "Role", "Seat No"]],
-  //     body: tableData,
-  //     headStyles: { fillColor: [40, 116, 166] }
-  //   });
+    // Adjust column width
+    ws["!cols"] = headers[0].map(() => ({ wch: 20 }));
 
-  //   doc.save(fileName);
-  // }
+    // Create workbook and append worksheet
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Seating Report");
+
+    // Generate Excel file and trigger download
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const excelFile = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(excelFile, fileName);
+}
+
 
   generateReport(): void {
     if (!this.employees || this.employees.length === 0) {
@@ -249,6 +249,8 @@ addEmployee() {
         this.manualNewSeatEntry = ''; // Reset manual entry if another option is selected
     }
 }
+
+
 
 
   updateSeat() {
