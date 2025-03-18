@@ -63,11 +63,7 @@ export class EmployeeComponent implements OnInit {
   manualSeatEntry: string = ''; // Store selected seat
 
   // Function triggered when seat selection changes
-  handleSeatSelection() {
-    if (this.selectedEmployee.seat_id === 'Manual') {
-      this.fetchVacantSeats(); // Fetch vacant seats when "Manual" is chosen
-    }
-  }
+
   // Fetch vacant seats from the backend
 fetchVacantSeats() {
   this.seatService.getVacantSeats().subscribe(
@@ -367,5 +363,13 @@ addEmployee() {
       this.currentPage--;
     }
   }
+
+  // Handle seat selection when editing employee
+handleSeatSelection() {
+  if (this.selectedEmployee.seat_id === 'Manual') {
+    this.fetchVacantSeats(); // Fetch vacant seats
+  }
+}
+
 
 }
