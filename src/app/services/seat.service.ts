@@ -42,5 +42,8 @@ import { Employee } from '../interfaces/employee';
       return this.http.get<Employee>(`${this.employeeUrl}/${employeeId}`);
     }
     
+    getVacantSeats(): Observable<string[]> {
+      return this.http.get<string[]>('http://localhost:8080/seats/vacant');
+    }
     
   }

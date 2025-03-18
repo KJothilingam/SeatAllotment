@@ -10,6 +10,8 @@ import autoTable from "jspdf-autotable";
 import { RouterLink } from '@angular/router';
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
+import { SeatService } from '../../services/seat.service';
+import { Seat } from '../../interfaces/seat';
 
 @Component({
   selector: 'app-employee',
@@ -50,11 +52,47 @@ export class EmployeeComponent implements OnInit {
 
   private http = inject(HttpClient);
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(private employeeService: EmployeeService , private seatService:SeatService) {}
 
   ngOnInit() {
     this.fetchEmployees();
+    this.fetchVacantSeats();
   }
+
+  vacantSeats: string[] = []; // Array to store seat IDs
+  manualSeatEntry: string = ''; // Store selected seat
+
+  // Function triggered when seat selection changes
+  handleSeatSelection() {
+    if (this.selectedEmployee.seat_id === 'Manual') {
+      this.fetchVacantSeats(); // Fetch vacant seats when "Manual" is chosen
+    }
+  }
+  // Fetch vacant seats from the backend
+fetchVacantSeats() {
+  this.seatService.getVacantSeats().subscribe(
+    (data: any) => { // Allow 'any' to debug API response
+      console.log("kk");
+      console.log("Raw Vacant Seats Response:", data); // Debugging
+
+      if (Array.isArray(data) && data.length > 0 && typeof data[0] === 'object' && 'id' in data[0]) {
+        this.vacantSeats = data.map((seat: Seat) => seat.id); // Extract seat IDs
+      } else {
+        console.warn("Unexpected API response format", data);
+        this.vacantSeats = []; // Default to an empty array
+      }
+
+      console.log("Processed Vacant Seats:", this.vacantSeats); // Check processed output
+    },
+    (error) => {
+      console.error("Error fetching vacant seats:", error);
+}
+);
+}
+
+
+
+
 
   get paginatedEmployees() {
     let filtered = this.employees.filter(emp => {
@@ -234,12 +272,12 @@ addEmployee() {
     this.showEditModal = true;
   }
 
-  manualSeatEntry: string = ''; 
-  handleSeatSelection() {
-    if (this.selectedEmployee.seat_id !== 'Manual') {
-      this.manualSeatEntry = ''; 
-    }
-  }
+  // manualSeatEntry: string = ''; 
+  // handleSeatSelection() {
+  //   if (this.selectedEmployee.seat_id !== 'Manual') {
+  //     this.manualSeatEntry = ''; 
+  //   }
+  // }
 
   manualNewSeatEntry: string = ''; 
   handleNewSeatSelection() {
