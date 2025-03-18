@@ -62,8 +62,6 @@ export class EmployeeComponent implements OnInit {
   vacantSeats: string[] = []; // Array to store seat IDs
   manualSeatEntry: string = ''; // Store selected seat
 
-  // Function triggered when seat selection changes
-
   // Fetch vacant seats from the backend
 fetchVacantSeats() {
   this.seatService.getVacantSeats().subscribe(
