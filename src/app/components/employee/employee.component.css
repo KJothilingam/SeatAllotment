@@ -25,6 +25,10 @@
   .sidebar-btn.active {
     background: #1abc9c;
   }
+  /* Smooth Transition for All Buttons */
+  button {
+    transition: 0.3s ease-in-out;
+  }
   .content {
     flex-grow: 1;
     padding: 20px;
@@ -167,11 +171,11 @@
     color: white;
   }
   
-  /* Hover Effects */
-  .submit-btn:hover {
-    background-color: #1abc9c;
+  /* Sidebar Buttons */
+  .sidebar-btn:hover, .logout-btn:hover {
+    background-color: #1bcfab; /* Brighter hover effect */
+    transition: 0.3s ease-in-out;
   }
-  
   .close-btn:hover {
     background-color: #d32f2f;
   }
@@ -236,3 +240,56 @@
     border:none;
   }
  
+
+  
+    /* Hover Effects for Action Buttons */
+    .add-btn, .search-btn, .menu-btn, .report-btn {
+      background-color: #1abc9c;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+  
+    .add-btn:hover, .search-btn:hover, .menu-btn:hover, .report-btn:hover {
+      background-color: #16a085; /* Slightly darker green */
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      transform: scale(1.05);
+    }
+  
+    /* Submit & Close Buttons */
+    .submit-btn:hover {
+      background-color: #16a085; /* Deep green */
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      transform: scale(1.05);
+    }
+  
+    .close-btn:hover {
+      background-color: #b71c1c; /* Darker red */
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      transform: scale(1.05);
+    }
+  
+    /* Pagination Buttons */
+    .pagination-controls button:hover {
+      background-color: #16a085;
+      box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+      transform: scale(1.05);
+    }
+  
+    /* Delete Button */
+    .delete-btn:hover {
+      color: #f44336;
+      text-decoration: underline;
+      transform: scale(1.1);
+    }
+  
+    /* Edit Button */
+    .edit-btn:hover {
+      color: #0044cc;
+      text-decoration: underline;
+      transform: scale(1.1);
+    }
+  
+  
