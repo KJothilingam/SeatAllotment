@@ -8,9 +8,9 @@
         <button (click)="setMenu('manageEmployee')" [class.active]="selectedMenu === 'manageEmployee'" class="sidebar-btn">
             Manage Employee
         </button>
-        <button (click)="setMenu('reports')" [class.active]="selectedMenu === 'reports'" class="sidebar-btn">
+        <!-- <button (click)="setMenu('reports')" [class.active]="selectedMenu === 'reports'" class="sidebar-btn">
             Reports
-        </button>
+        </button> -->
     </div>
 
     <!-- Main Content -->
@@ -25,14 +25,17 @@
             <p>Configure the seating layout and assign desks to employees.</p>
         </div>
 
-        <!-- Manage Employees Section -->
-        <div *ngIf="selectedMenu === 'manageEmployee'" class="employee-container">
-            <!-- Search Bar & Add Employee -->
-            <div class="search-bar">
-                <input type="text" [(ngModel)]="searchQuery" placeholder="Search">
-                <button class="add-btn" (click)="showModal = true">+ Add Employee</button>
-            </div>
-            <hr>
+            <!-- Manage Employees Section -->
+            <div *ngIf="selectedMenu === 'manageEmployee'" class="employee-container">
+                <!-- Search Bar & Action Buttons -->
+                <div class="search-bar">
+                    <input type="text" [(ngModel)]="searchQuery" placeholder="Search" class="small-search">
+                    <button class="add-btn" (click)="showModal = true">+ Add Employee</button>
+                    <button class="report-btn" (click)="generateReport()">Generate PDF</button>
+                    <button class="report-btn" (click)="generateReportExcel()">Generate Excel</button>
+                </div>
+                <hr>
+
 
             <!-- Employee Table -->
             <table class="employee-table">
@@ -170,11 +173,11 @@
         </div>
 
         <!-- Reports Section -->
-        <div *ngIf="selectedMenu === 'reports'">
+        <!-- <div *ngIf="selectedMenu === 'reports'">
             <h3>Seating Reports</h3>
             <p>Generate reports on seating allocations and availability.</p>
             <button class="btn report-btn" (click)="generateReport()">Generate Report</button>
             <button class="btn report-btn" (click)="generateReportExcel()" style="margin-left: 40px;">Generate EXCEL</button>
-        </div>
+        </div> -->
     </div>
 </div>
