@@ -185,74 +185,67 @@
             </div>
         </div>
 
-        <!-- Modal for Editing Employee -->
+<!-- Modal for Editing Employee -->
         <div class="modal" *ngIf="showEditModal">
             <div class="modal-content">
                 <h2>Edit Employee</h2>
 
                 <div class="form-group">
                     <label>Name</label>
-                    <input [(ngModel)]="selectedEmployee.name" class="form-control" >
+                    <input [(ngModel)]="selectedEmployee.name" class="form-control">
                 </div>
 
                 <div class="form-group">
                     <label>Department</label>
-                    <input [(ngModel)]="selectedEmployee.department" class="form-control" >
+                    <input [(ngModel)]="selectedEmployee.department" class="form-control">
                 </div>
 
                 <div class="form-group">
                     <label>Role</label>
-                    <input [(ngModel)]="selectedEmployee.role" class="form-control" >
+                    <input [(ngModel)]="selectedEmployee.role" class="form-control">
                 </div>
 
+                <!-- Seat Selection -->
                 <div class="form-group seat-selection">
                     <label>Seat No</label>
-                    <select [(ngModel)]="selectedEmployee.seat_id" (change)="handleNewSeatSelection()" class="form-control">
+                    <select [(ngModel)]="selectedEmployee.seat_id" (change)="handleSeatSelection()" class="form-control">
                         <option value="Work From Home">Work From Home</option>
                         <option value="Unassigned">Unassigned</option>
                         <option value="Manual">Manual Entry</option>
                     </select>
-                    <div class="form-group seat-selection">
-                        <label>Seat No</label>
-                        <select [(ngModel)]="selectedEmployee.seat_id" (change)="handleSeatSelection()" class="form-control">
-                            <option value="Work From Home">Work From Home</option>
-                            <option value="Unassigned">Unassigned</option>
-                            <option value="Manual">Manual Entry</option>
-                        </select>
-                    
-                        <!-- Dropdown for vacant seats when "Manual Entry" is selected -->
-                        <select *ngIf="selectedEmployee.seat_id === 'Manual' && vacantSeats.length > 0"
+
+                    <!-- Dropdown for vacant seats -->
+                    <select *ngIf="selectedEmployee.seat_id === 'Manual' && vacantSeats.length > 0"
                             [(ngModel)]="manualSeatEntry"
                             class="form-control">
-                            <option *ngFor="let seat of vacantSeats" [value]="seat">{{ seat }}</option>
-                        </select>
-                    
-                        <!-- Input field for manual entry if no vacant seats are available -->
-                        <input *ngIf="selectedEmployee.seat_id === 'Manual' && vacantSeats.length === 0"
-                            [(ngModel)]="manualSeatEntry"
-                            class="form-control"
-                            placeholder="Enter Seat No">
-                    
-                        <!-- Message when no vacant seats are available -->
-                        <p *ngIf="selectedEmployee.seat_id === 'Manual' && vacantSeats.length === 0">
-                            No vacant seats available. Enter seat manually.
-                        </p>
-                    </div>
-                    
+                        <option *ngFor="let seat of vacantSeats" [value]="seat">{{ seat }}</option>
+                    </select>
+
+                    <!-- Input field for manual seat entry -->
+                    <input *ngIf="selectedEmployee.seat_id === 'Manual' && vacantSeats.length === 0"
+                        [(ngModel)]="manualSeatEntry"
+                        class="form-control"
+                        placeholder="Enter Seat No">
+
+                    <!-- Message when no vacant seats are available -->
+                    <p *ngIf="selectedEmployee.seat_id === 'Manual' && vacantSeats.length === 0">
+                        No vacant seats available. Enter seat manually.
+                    </p>
                 </div>
-                
 
                 <div class="modal-buttons">
                     <button class="submit-btn" (click)="updateSeat()">Update</button>
                     <button class="close-btn" (click)="showEditModal = false">Close</button>
                 </div>
-            </div>
-        </div>
+
+            </div> <!-- This properly closes modal-content -->
+        </div> <!-- This properly closes modal -->
 
         <!-- Confirmation Popup -->
-        <div class="confirmation-popup" *ngIf="showConfirmation">
+        <div *ngIf="showConfirmation" class="confirmation-popup">
             Employee Added Successfully!
         </div>
+
 
         <!-- Reports Section -->
         <!-- <div *ngIf="selectedMenu === 'reports'">
